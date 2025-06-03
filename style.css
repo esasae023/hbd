@@ -1,36 +1,80 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:300italic);
+
 html,
 body {
   width: 100%;
-  height: 100%;
+  /* Consider min-height: 100vh; for full viewport height if content is short */
+  /* height: 100%; is okay but can sometimes be tricky with overflow */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Apply to all elements for easier sizing */
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
 }
 
 body {
   background: #252432;
+  font-family: "Lato", sans-serif; /* Moved from .text to body for global font */
+  /* Ensure body allows mobile-wrapper to center and doesn't impose its own width restrictions
+     that conflict with max-width of the wrapper */
+}
+
+.mobile-wrapper {
+  max-width: 480px; /* Adjust this value as needed for your preferred mobile width */
+  min-height: 100vh; /* Ensure wrapper takes at least full viewport height */
+  margin: 0 auto; /* Center the wrapper */
+  position: relative; /* Important for positioning child elements like the candle */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  padding: 10px; /* Add some padding so content isn't flush against screen edges */
 }
 
 #cake {
   display: block;
   position: relative;
+  /* The margin: -10em auto 0 auto; pushes the cake up significantly.
+     On very small screens or if the font size is large, -10em could be too much.
+     You might want to adjust this, e.g., -5em or use pixels if preferred.
+     For now, keeping original relative scaling. */
   margin: -10em auto 0 auto;
+  width: 90%; /* Make SVG take most of the wrapper's width */
+  max-width: 200px; /* Original SVG width, acts as a cap to prevent overscaling */
+  height: auto; /* Maintain aspect ratio */
 }
 
 .candle {
   background: #ffffff;
   border-radius: 10px;
-  position: absolute;
-  top: 228px;
+  position: absolute; /* Will be positioned relative to .mobile-wrapper */
+  top: 228px; /* This fixed pixel value might need adjustment based on how the cake scales.
+                 Test on various mobile sizes. */
   left: 50%;
-  margin-left: -2.4px;
-  margin-top: -8.33333333px;
+  transform: translateX(-50%); /* Better way to center when exact width is known */
+  /* margin-left: -2.4px; Replaced by transform */
+  margin-top: -8.33333333px; /* Original value */
   width: 5px;
   height: 35px;
-  transform: translateY(-300px);
+  /* Animation translateY will be relative to its new position */
+  transform: translateY(-300px) translateX(-50%); /* Initial state for animation combined with centering */
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
   -webkit-animation: in 500ms 6s ease-out forwards;
           animation: in 500ms 6s ease-out forwards;
 }
+
+/* The animation 'in' needs to restore the translateX for centering */
+@-webkit-keyframes in {
+  to {
+    transform: translateY(0) translateX(-50%);
+  }
+}
+@keyframes in {
+  to {
+    transform: translateY(0) translateX(-50%);
+  }
+}
+
 
 .candle:after,
 .candle:before {
@@ -54,9 +98,9 @@ body {
 .fire {
   border-radius: 100%;
   position: absolute;
-  top: -20px;
+  top: -20px; /* Relative to the candle */
   left: 50%;
-  margin-left: -2.6px;
+  margin-left: -3.333333335px; /* (width of fire / 2) */
   width: 6.66666667px;
   height: 18px;
 }
@@ -110,22 +154,14 @@ body {
     transform: translateY(-20px) scale(0);
   }
 }
-@-webkit-keyframes in {
-  to {
-    transform: translateY(0);
-  }
-}
-@keyframes in {
-  to {
-    transform: translateY(0);
-  }
-}
+
 .text {
   color: #d1d1d1;
-  font-family: "Lato", sans-serif;
+  /* font-family: "Lato", sans-serif; -- Moved to body */
   font-weight: 300;
   font-style: italic;
   text-align: center;
+  margin-top: 20px; /* Add some space above text */
 }
 .text h1 {
   font-size: 1.4em;
@@ -140,6 +176,7 @@ body {
     font-size: 25px;   /* opsional: lebih besar */
     color: #ffffff;
     margin-bottom: 10px;
+    font-family: Arial, Helvetica, sans-serif;
   }
   .button-container {
     display: flex;
@@ -152,16 +189,17 @@ body {
   .button-container button {
     background-color: rgba(255, 255, 255, 0.3); /* putih transparan */
     border: none;
-    border-radius: 20px;       /* sudut membulat */
-    padding: 10px 20px;
+    border-radius: 20px;     /* sudut membulat */
+    padding: 12px 24px; /* Slightly increased padding for better touchability */
     cursor: pointer;
     font-size: 16px;
-    color: #000000;               /* warna teks hitam */
+    color: #000000;          /* warna teks hitam */
     backdrop-filter: blur(4px); /* opsional: efek blur di belakang */
     transition: background-color 0.3s;
+    min-width: 150px; /* Ensure buttons have a decent minimum width */
+    font-family:Arial, Helvetica, sans-serif;
   }
 
   .button-container button:hover {
     background-color: rgba(255, 255, 255, 0.5); /* efek hover */
   }
-</style>
