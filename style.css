@@ -130,3 +130,38 @@ body {
 .text h1 {
   font-size: 1.4em;
 }
+  .section-title {
+    margin-top: 20px; /* jarak antar div */
+    text-align: center; /* agar h1 di tengah */
+  }
+
+  .section-title h2 {
+    font-weight: bold; /* tebal */
+    font-size: 25px;   /* opsional: lebih besar */
+    color: #ffffff;
+    margin-bottom: 10px;
+  }
+  .button-container {
+    display: flex;
+    flex-direction: column;  /* susun ke bawah */
+    align-items: center;     /* rata tengah horizontal */
+    gap: 10px;               /* jarak antar tombol */
+    margin-top: 20px;
+  }
+
+  .button-container button {
+    background-color: rgba(255, 255, 255, 0.3); /* putih transparan */
+    border: none;
+    border-radius: 20px;       /* sudut membulat */
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #000000;               /* warna teks hitam */
+    backdrop-filter: blur(4px); /* opsional: efek blur di belakang */
+    transition: background-color 0.3s;
+  }
+
+  .button-container button:hover {
+    background-color: rgba(255, 255, 255, 0.5); /* efek hover */
+  }
+</style>
